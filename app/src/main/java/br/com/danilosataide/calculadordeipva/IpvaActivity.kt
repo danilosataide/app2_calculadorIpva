@@ -97,7 +97,9 @@ class IpvaActivity : AppCompatActivity() {
         {
             if(estados[i] == estado){
                 var ipva = valor?.toDouble()?.let { calculator(aliquotas[i].toDouble(), it) };
-                txtValorIpva.text = "R$ $ipva";
+                var aliquota = aliquotas[i]
+                txtAliquota.text = "$aliquota %"
+                txtValorIpva.text = "R$ $ipva"
                 break
             }
         }
