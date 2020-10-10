@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,13 +81,17 @@ class MainActivity : AppCompatActivity() {
             } else {
                 //Todos os campos foram preenchidos
 
+                var uniqueID = UUID.randomUUID().toString()
+                Toast.makeText(this, uniqueID, Toast.LENGTH_SHORT).show()
+
                 //Criando ou acessando o arquivo de preferências compartilhadas
-                val sharedPrefs = getSharedPreferences("veiculo_$modelo", Context.MODE_PRIVATE)
+                val sharedPrefs = getSharedPreferences("REGISTRO_$uniqueID", Context.MODE_PRIVATE)
 
                 //Criando um editor par o arquivo
                 val editPrefs = sharedPrefs.edit()
 
                 //Preparando os dados para serem salvos
+                editPrefs.putString("ID", uniqueID)
                 editPrefs.putString("MODELO", modelo)
                 editPrefs.putString("VALOR", valor.toString())
                 editPrefs.putString("ESTADO", estado)
@@ -98,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 val mIntent = Intent(this, IpvaActivity::class.java)
 
                 //Passando informações através da Intent
-                mIntent.putExtra("INTENT_MODELO+ESTADO", modelo+estado)
+                mIntent.putExtra("INTENT_ID", uniqueID)
                 startActivity(mIntent)
 
                 //Tirando todas as telas do empilhamento
